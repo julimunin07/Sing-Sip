@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sing & Sip - Karaoke y Bar</title>
+
+    <!-- Fuentes elegantes desde Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Poppins&display=swap" rel="stylesheet" />
+
+    <style>
+        /* Reset y base */
+        body {
+            margin: 0;
+            background-color: #000000;
+            color: #00ffff;
+            font-family: 'Poppins', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        a, button {
+            color: #00ffff;
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Contenedor principal - flex grow para que el footer quede abajo */
+        main {
+            flex-grow: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            width: 90vw;
+        }
+        /* Logo imagen centrado */
+        #home img {
+            max-width: 320px;
+            width: 80vw;
+            height: auto;
+            margin: 40px auto;
+            display: block;
+            filter: drop-shadow(0 0 10px #00ffff);
+        }
+        /* Descripción, texto blanco y elegante */
+        #descripcion {
+            color: #fff;
+            font-size: 1.125rem;
+            line-height: 1.7;
+            text-align: justify;
+            text-shadow:
+                0 0 6px #00ffff;
+            margin-bottom: 40px;
+            font-family: 'Poppins', sans-serif;
+        }
+        #descripcion p {
+            margin-bottom: 1.3rem;
+        }
+        /* Títulos con Playfair Display */
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: #00ffff;
+            font-weight: 700;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            text-align: center;
+            text-transform: uppercase;
+            text-shadow:
+                0 0 10px #00ffff;
+        }
+        /* Botones de reserva ubicados debajo de la descripción, centrados */
+        #botonesReserva {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+        #botonesReserva button {
+            background: transparent;
+            border: 3px solid #00ffff;
+            border-radius: 50px;
+            padding: 15px 45px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow:
+                0 0 15px #00ffff;
+            text-transform: uppercase;
+            font-family: 'Playfair Display', serif;
+            color: #00ffff;
+            min-width: 180px;
+        }
+        #botonesReserva button:hover {
+            background-color: #00ffff;
+            color: #000;
+            box-shadow:
+                0 0 40px #00ffff,
+                0 0 70px #00ffff;
+        }
+
+        /* Reservas: formularios centrados */
+        section.reserva {
+            max-width: 700px;
+            margin: 0 auto 60px auto;
+            padding: 20px;
+            background-color: #001f1f;
+            border-radius: 12px;
+            box-shadow:
+                0 0 25px #00ffff;
+            display: none;
+            color: #00ffff;
+        }
+        /* Flex forms en columna */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 18px;
+            font-weight: 600;
+            text-shadow: 0 0 6px #00ffff;
+            font-family: 'Poppins', sans-serif;
+        }
+        input, select, button[type="submit"] {
+            margin-top: 6px;
+            padding: 11px 14px;
+            border-radius: 6px;
+            border: 1.8px solid #00ffff;
+            background: transparent;
+            color: #00ffff;
+            font-size: 1rem;
+            box-shadow:
+                0 0 10px #00ffff inset;
+            outline: none;
+            font-family: 'Poppins', sans-serif;
+            transition: box-shadow 0.3s ease;
+        }
+        /* Resaltar en foco inputs */
+        input:focus, select:focus {
+            box-shadow:
+                0 0 20px 4px #00ffff inset;
+        }
+        /* Botón enviar */
+        button[type="submit"] {
+            border: 3px solid #00ffff;
+            margin-top: 28px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow:
+                0 0 15px #00ffff;
+            transition: all 0.3s ease-in-out;
+            font-family: 'Playfair Display', serif;
+        }
+        button[type="submit"]:hover {
+            background-color: #00ffff;
+            color: #000;
+            box-shadow:
+                0 0 35px #00ffff,
+                0 0 60px #00ffff;
+        }
+        /* Botón volver */
+        button.btn-volver {
+            margin: 0 auto 15px auto;
+            display: block;
+            background: transparent;
+            border: 2px solid #00ffff;
+            border-radius: 30px;
+            padding: 10px 30px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow:
+                0 0 10px #00ffff;
+            transition: all 0.3s ease-in-out;
+            color: #00ffff;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+        }
+        button.btn-volver:hover {
+            background-color: #00ffff;
+            color: #000;
+            box-shadow:
+                0 0 30px #00ffff,
+                0 0 60px #00ffff;
+        }
+        /* Precios karaoke */
+        #preciosKaraoke {
+            background-color: #000a0a;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-size: 1rem;
+            line-height: 1.5;
+            box-shadow:
+                0 0 15px #00ffff;
+            font-family: 'Poppins', sans-serif;
+            user-select: none;
+        }
+        #preciosKaraoke ul {
+            margin: 10px 0 0 20px;
+        }
+        #totalKaraoke {
+            margin-top: 18px;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #00ffff;
+            text-shadow: 0 0 14px #00ffff;
+            font-family: 'Playfair Display', serif;
+        }
+        /* Footer fijo al pie */
+        footer {
+            background-color: #000814;
+            padding: 20px 15px;
+            color: #00ffff;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            text-align: center;
+            box-shadow:
+                inset 0 1px 6px #00ffff;
+            user-select: none;
+        }
+        footer p, footer div {
+            margin: 6px 0;
+        }
+        /* Logo footer */
+        footer img {
+            max-width: 120px;
+            height: auto;
+            margin: 0 auto 18px auto;
+            filter: drop-shadow(0 0 10px #00ffff);
+            display: block;
+        }
+        /* Íconos emoji con algo de margen */
+        footer span.emoji {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+        /* Responsive */
+        @media (max-width: 600px) {
+            #botonesReserva {
+                gap: 24px;
+            }
+            #botonesReserva button {
+                width: 100%;
+                min-width: unset;
+            }
+            #descripcion {
+                font-size: 1rem;
+            }
+            footer img {
+                max-width: 90px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <section id="home" aria-label="Bienvenida y descripción">
+            <img src="SingAndSip-logo.jpg" alt="Logo Sing and Sip" />
+
+            <div id="descripcion" aria-label="Descripción de la empresa">
+                <p>Sing and Sip es un proyecto innovador que busca traer a la Argentina una propuesta única de entretenimiento, inspirada en un formato muy popular en Estados Unidos y Asia. La idea central es fusionar la diversión del karaoke con un ambiente moderno, elegante y privado, donde los clientes puedan disfrutar de la música sin las limitaciones de los karaokes tradicionales.</p>
+
+                <p>El espacio contará con:</p>
+
+                <p>Habitaciones privadas de karaoke, con equipamiento de alta calidad en sonido, pantallas y micrófonos, para que los grupos puedan cantar en un entorno cómodo e íntimo.<br>
+                Un bar principal, con una amplia carta de tragos de autor, cervezas y aperitivos, que funcionará tanto como área de espera como espacio social independiente.</p>
+
+                <p>Detectamos la oportunidad de introducir en Argentina un modelo de karaoke que aún no existe en el país, pero que ya es tendencia en Estados Unidos, Corea del Sur y Japón. Buen servicio de bar dentro de las habitaciones, pensado para brindar una experiencia completa sin necesidad de interrumpir el entretenimiento.</p>
+
+                <p>De esta forma, Sing and Sip busca ser más que un karaoke: una experiencia de ocio nocturno integral, donde convergen música, gastronomía y diversión en un mismo lugar.</p>
+            </div>
+
+            <div id="botonesReserva" role="navigation" aria-label="Opciones de reserva">
+                <button id="btn-mesa" aria-label="Reservar mesa">Reservar Mesa</button>
+                <button id="btn-karaoke" aria-label="Reservar sala de karaoke">Reservar Sala de Karaoke</button>
+            </div>
+        </section>
+
+        <!-- Reserva mesa -->
+        <section id="reservaMesa" class="reserva" aria-label="Formulario de reserva de mesa">
+            <button class="btn-volver" id="btn-volver-mesa" aria-label="Volver a menú principal">← Volver</button>
+            <h2>Reservar Mesa</h2>
+            <form id="form-reserva-mesa" novalidate>
+                <label for="nombre-mesa">Nombre:</label>
+                <input type="text" id="nombre-mesa" required autocomplete="name" />
+
+                <label for="fecha-mesa">Fecha:</label>
+                <input type="date" id="fecha-mesa" required />
+
+                <label for="hora-mesa">Hora:</label>
+                <select id="hora-mesa" required aria-required="true">
+                    <!-- Se llenará con JS -->
+                </select>
+
+                <label for="personas-mesa">Número de comensales:</label>
+                <input type="number" id="personas-mesa" min="1" max="10" required />
+
+                <button type="submit">Reservar Mesa</button>
+            </form>
+        </section>
+
+        <!-- Reserva karaoke -->
+        <section id="reservaKaraoke" class="reserva" aria-label="Formulario de reserva de sala de karaoke">
+            <button class="btn-volver" id="btn-volver-karaoke" aria-label="Volver a menú principal">← Volver</button>
+            <h2>Reservar Sala de Karaoke</h2>
+            <form id="form-reserva-karaoke" novalidate>
+                <label for="nombre-karaoke">Nombre:</label>
+                <input type="text" id="nombre-karaoke" required autocomplete="name" />
+
+                <label for="fecha-karaoke">Fecha:</label>
+                <input type="date" id="fecha-karaoke" required />
+
+                <label for="hora-karaoke">Hora:</label>
+                <select id="hora-karaoke" required aria-required="true">
+                    <!-- Se llenará con JS -->
+                </select>
+
+                <label for="personas-karaoke">Número de personas:</label>
+                <select id="personas-karaoke" required>
+                    <option value="" disabled selected>Seleccione cantidad</option>
+                    <option value="2">2 personas</option>
+                    <option value="3">3 personas</option>
+                    <option value="4">4 personas</option>
+                    <option value="5">5 personas</option>
+                    <option value="6">6 personas</option>
+                    <option value="7">7 personas</option>
+                    <option value="8">8 personas</option>
+                </select>
+
+                <div id="preciosKaraoke" aria-live="polite">
+                    <p>Precios:</p>
+                    <ul>
+                        <li>2 personas: $22.000 por persona ($44.000 total)</li>
+                        <li>3 personas: $20.000 por persona ($60.000 total)</li>
+                        <li>4 personas: $19.000 por persona ($76.000 total)</li>
+                        <li>5/6/7 personas: $18.000 por persona ($90.000 total)</li>
+                        <li>8 personas: $15.000 por persona ($120.000 total)</li>
+                    </ul>
+                </div>
+
+                <div id="totalKaraoke" aria-live="polite" aria-atomic="true"></div>
+
+                <button type="submit">Reservar Sala</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <img src="SingAndSip-logo.jpg" alt="Logo Sing and Sip Footer" />
+        <p><strong>Sing and Sip</strong></p>
+        <p>Proyecto de entretenimiento y coctelería privada</p>
+        <p><span class="emoji" aria-hidden="true">📍</span> Doctor Enrique Finochietto, San Telmo, Capital Federal</p>
+        <p><span class="emoji" aria-hidden="true">📱</span> Instagram: <a href="https://instagram.com/singandsipkaraoke" target="_blank" rel="noopener noreferrer" style="color:#00ffff;">@singandsipkaraoke</a></p>
+    </footer>
+
+<script>
+    // Selects horario para mesas y karaoke
+    const selectHoraMesa = document.getElementById('hora-mesa');
+    const selectHoraKaraoke = document.getElementById('hora-karaoke');
+
+    // Función para generar horarios cada 30m desde 19:00 a 23:00
+    function cargarHorarios(selectElement) {
+        const horarios = [];
+        for(let h=19; h<=23; h++){
+            for(let m=0; m<60; m+=30){
+                if(h === 23 && m >0) break;
+                const horaStr = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+                horarios.push(horaStr);
+            }
+        }
+        selectElement.innerHTML = "";
+        horarios.forEach(horario=>{
+            const opt = document.createElement('option');
+            opt.value = horario;
+            opt.textContent = horario;
+            selectElement.appendChild(opt);
+        });
+    }
+    cargarHorarios(selectHoraMesa);
+    cargarHorarios(selectHoraKaraoke);
+
+    // Mostrar/ocultar forms
+    const btnMesa = document.getElementById('btn-mesa');
+    const btnKaraoke = document.getElementById('btn-karaoke');
+    const reservaMesa = document.getElementById('reservaMesa');
+    const reservaKaraoke = document.getElementById('reservaKaraoke');
+    const homeSection = document.getElementById('home');
+    const btnVolverMesa = document.getElementById('btn-volver-mesa');
+    const btnVolverKaraoke = document.getElementById('btn-volver-karaoke');
+
+    btnMesa.addEventListener('click', () => {
+        homeSection.style.display = 'none';
+        reservaMesa.style.display = 'block';
+        reservaKaraoke.style.display = 'none';
+        window.scrollTo(0,0);
+    });
+    btnKaraoke.addEventListener('click', () => {
+        homeSection.style.display = 'none';
+        reservaKaraoke.style.display = 'block';
+        reservaMesa.style.display = 'none';
+        window.scrollTo(0,0);
+    });
+    btnVolverMesa.addEventListener('click', () => {
+        reservaMesa.style.display = 'none';
+        homeSection.style.display = 'block';
+        window.scrollTo(0,0);
+    });
+    btnVolverKaraoke.addEventListener('click', () => {
+        reservaKaraoke.style.display = 'none';
+        homeSection.style.display = 'block';
+        window.scrollTo(0,0);
+    });
+
+    // Precios karaoke (según cant personas)
+    const selectPersonasKaraoke = document.getElementById('personas-karaoke');
+    const totalKaraoke = document.getElementById('totalKaraoke');
+
+    function calcularPrecio(personas){
+        let precioPorPersona = 0;
+        let total = 0;
+        if(personas === 2){
+            precioPorPersona = 22000;
+            total = 44000;
+        } else if(personas === 3){
+            precioPorPersona = 20000;
+            total = 60000;
+        } else if(personas === 4){
+            precioPorPersona = 19000;
+            total = 76000;
+        } else if([5,6,7].includes(personas)){
+            precioPorPersona = 18000;
+            total = 18000 * personas;
+        } else if(personas === 8){
+            precioPorPersona = 15000;
+            total = 120000;
+        }
+        return {precioPorPersona, total};
+    }
+    selectPersonasKaraoke.addEventListener('change', function(){
+        const personas = parseInt(this.value);
+        if(!personas){
+            totalKaraoke.textContent = '';
+            return;
+        }
+        const {precioPorPersona, total} = calcularPrecio(personas);
+        totalKaraoke.textContent = `Precio por persona: $${precioPorPersona.toLocaleString('es-AR')} | Total: $${total.toLocaleString('es-AR')}`;
+    });
+
+    // Formularios envío
+    const formMesa = document.getElementById('form-reserva-mesa');
+    formMesa.addEventListener('submit', e=> {
+        e.preventDefault();
+        if(!formMesa.checkValidity()){
+            alert('Por favor complete todos los campos correctamente para la reserva de mesa.');
+            return;
+        }
+        alert('¡Reserva de mesa confirmada! Nos contactaremos pronto para confirmar detalles.');
+        formMesa.reset();
+        reservaMesa.style.display = 'none';
+        homeSection.style.display = 'block';
+    });
+    const formKaraoke = document.getElementById('form-reserva-karaoke');
+    formKaraoke.addEventListener('submit', e=>{
+        e.preventDefault();
+        if(!formKaraoke.checkValidity()){
+            alert('Por favor complete todos los campos correctamente para la reserva de sala de karaoke.');
+            return;
+        }
+        alert('¡Reserva de sala de karaoke confirmada! Nos contactaremos pronto para confirmar detalles.');
+        formKaraoke.reset();
+        totalKaraoke.textContent = '';
+        reservaKaraoke.style.display = 'none';
+        homeSection.style.display = 'block';
+    });
+
+</script>
+</body>
+</html>
